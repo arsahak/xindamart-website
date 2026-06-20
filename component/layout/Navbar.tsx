@@ -1,23 +1,24 @@
 "use client";
 
-import { useState } from "react";
-import Link from "next/link";
-import { useParams } from "next/navigation";
+import { navCategories } from "@/app/data/categories";
+import type { Dictionary } from "@/app/dictionaries";
+import { getDirection, type Locale } from "@/app/i18n-config";
+import { Dropdown } from "@/component/motion/Dropdown";
+import { MobileDrawer } from "@/component/motion/MobileDrawer";
+import { megaMenuVariants } from "@/component/motion/variants";
 import {
-  Search,
+  Camera,
+  ChevronDown,
   Heart,
+  LayoutGrid,
+  Menu,
   ShoppingCart,
   User,
-  Menu,
   X,
-  ChevronDown,
-  LayoutGrid,
 } from "lucide-react";
-import { navCategories } from "@/app/data/categories";
-import { MegaMenu } from "@/component/layout/MegaMenu";
-import { MobileDrawer } from "@/component/motion/MobileDrawer";
-import { getDirection, type Locale } from "@/app/i18n-config";
-import type { Dictionary } from "@/app/dictionaries";
+import Link from "next/link";
+import { useParams } from "next/navigation";
+import { useState } from "react";
 
 interface NavbarProps {
   dict: Dictionary;
@@ -28,8 +29,12 @@ const Navbar = ({ dict }: NavbarProps) => {
   const lang = params?.lang ?? "en";
   const dir = getDirection(lang);
 
-  const [activeCategory, setActiveCategory] = useState<string | null>(null);
   const [mobileOpen, setMobileOpen] = useState(false);
+  const [shopMenuOpen, setShopMenuOpen] = useState(false);
+  const [activeShopCategory, setActiveShopCategory] = useState(navCategories[0].label);
+
+  const activeCategory =
+    navCategories.find((category) => category.label === activeShopCategory) ?? navCategories[0];
 
   return (
     <header className="sticky top-0 z-40 bg-(--color-surface) shadow-(--shadow-sm)">
@@ -51,19 +56,53 @@ const Navbar = ({ dict }: NavbarProps) => {
           Xinda<span className="text-(--color-secondary)">mart</span>
         </Link>
 
+        <button
+          type="button"
+          aria-label="Browse categories"
+          onClick={() => setShopMenuOpen((open) => !open)}
+          className="btn-ghost hidden !p-2 sm:flex"
+        >
+          <LayoutGrid size={20} />
+        </button>
+
+        <Link
+          href={`/${lang}/category`}
+          className="hidden shrink-0 text-sm font-semibold text-(--color-text) transition-colors hover:text-(--color-primary) sm:inline-flex"
+        >
+          Shop
+        </Link>
+
         <form role="search" className="hidden flex-1 items-center md:flex">
           <label htmlFor="navbar-search" className="sr-only">
             {dict.common.search}
           </label>
-          <div className="flex w-full items-center gap-1 rounded-full border border-(--color-border) bg-(--color-bg) p-1 transition-colors focus-within:border-(--color-primary) focus-within:bg-(--color-surface) focus-within:shadow-[0_0_0_3px_var(--color-primary-faint)]">
+          <div className="flex h-[46px] w-full items-stretch overflow-hidden rounded-full border border-(--color-border) bg-(--color-bg) shadow-(--shadow-sm) transition-all focus-within:border-(--color-primary) focus-within:bg-(--color-surface) focus-within:shadow-[0_0_0_3px_var(--color-primary-faint)]">
+            <label
+              htmlFor="navbar-image-search"
+              aria-label="Search by image"
+              title="Search by image"
+              className="flex h-full w-[50px] shrink-0 cursor-pointer items-center justify-center bg-(--color-border) text-(--color-text-muted) transition-colors hover:bg-(--color-primary-faint) hover:text-(--color-primary)"
+            >
+              <Camera size={20} />
+            </label>
+            <input
+              id="navbar-image-search"
+              type="file"
+              accept="image/*"
+              capture="environment"
+              className="hidden"
+            />
             <input
               id="navbar-search"
               type="search"
               placeholder={dict.common.search}
-              className="w-full min-w-0 border-0 bg-transparent px-3 py-0 shadow-none outline-none"
+              className="w-full min-w-0 border-0 bg-transparent px-3 py-3 text-sm shadow-none outline-none placeholder:text-(--color-text-light)"
             />
-            <button type="submit" aria-label={dict.common.search} className="btn-primary shrink-0 rounded-full px-5 py-2">
-              <Search size={18} />
+            <button
+              type="submit"
+              className="btn-primary me-1.5 shrink-0 self-center rounded-full px-5"
+            >
+              Search
             </button>
           </div>
         </form>
@@ -71,94 +110,98 @@ const Navbar = ({ dict }: NavbarProps) => {
         <div className="ms-auto flex items-center gap-1 sm:gap-2">
           <Link
             href={`/${lang}/wishlist`}
-            className="btn-ghost hidden !flex-col !gap-0.5 !px-3 !py-1.5 sm:flex"
+            aria-label={dict.nav.wishlist}
+            className="btn-ghost hidden !p-2 sm:flex"
           >
             <Heart size={20} />
-            <span className="text-xs font-medium">{dict.nav.wishlist}</span>
           </Link>
 
           <Link
             href={`/${lang}/cart`}
-            className="btn-ghost relative hidden !flex-col !gap-0.5 !px-3 !py-1.5 sm:flex"
+            aria-label={dict.nav.cart}
+            className="btn-ghost relative !p-2"
           >
-            <span className="relative">
-              <ShoppingCart size={20} />
-              <span className="absolute -right-1.5 -top-1.5 flex h-4 w-4 items-center justify-center rounded-full bg-(--color-secondary) text-[10px] font-bold text-white">
-                0
-              </span>
-            </span>
-            <span className="text-xs font-medium">{dict.nav.cart}</span>
-          </Link>
-
-          <Link
-            href={`/${lang}/sign-in`}
-            className="btn-ghost hidden !flex-col !gap-0.5 !px-3 !py-1.5 sm:flex"
-          >
-            <User size={20} />
-            <span className="text-xs font-medium">{dict.nav.account}</span>
-          </Link>
-
-          <Link href={`/${lang}/cart`} className="btn-ghost relative !p-2 sm:hidden">
             <ShoppingCart size={20} />
             <span className="absolute right-0.5 top-0.5 flex h-3.5 w-3.5 items-center justify-center rounded-full bg-(--color-secondary) text-[9px] font-bold text-white">
               0
             </span>
           </Link>
+
+          <Link
+            href={`/${lang}/sign-in`}
+            aria-label={dict.nav.account}
+            className="btn-ghost hidden !p-2 sm:flex"
+          >
+            <User size={20} />
+          </Link>
         </div>
       </div>
 
-      {/* Category row with mega menus (desktop) */}
-      <div
-        className="relative hidden border-t border-(--color-border) bg-(--color-bg) lg:block"
-        onMouseLeave={() => setActiveCategory(null)}
+      {/* Category mega menu — full width, toggled by the grid icon */}
+      {shopMenuOpen && (
+        <button
+          type="button"
+          aria-label="Close menu"
+          onClick={() => setShopMenuOpen(false)}
+          className="fixed inset-0 z-20 cursor-default"
+        />
+      )}
+
+      <Dropdown
+        show={shopMenuOpen}
+        variants={megaMenuVariants}
+        className="absolute inset-x-0 top-full z-30 border-t border-(--color-border) bg-(--color-surface) shadow-xl"
       >
-        <nav className="container flex items-center gap-1">
-          <Link
-            href={`/${lang}/category`}
-            className="flex items-center gap-2 px-3 py-2.5 text-sm font-semibold text-(--color-primary)"
-          >
-            <LayoutGrid size={16} />
-            {dict.nav.all_categories}
-          </Link>
-
-          {navCategories.map((category) => (
-            <div key={category.label} onMouseEnter={() => setActiveCategory(category.label)}>
-              <Link
-                href={`/${lang}${category.href}`}
-                className="flex items-center gap-1 px-3 py-2.5 text-sm font-medium text-(--color-text) transition-colors hover:text-(--color-primary)"
+        <div className="container grid grid-cols-[220px_1fr] gap-8 py-6">
+          <div className="flex max-h-[420px] flex-col gap-1 overflow-y-auto border-e border-(--color-border) pe-4">
+            {navCategories.map((category) => (
+              <button
+                key={category.label}
+                type="button"
+                onMouseEnter={() => setActiveShopCategory(category.label)}
+                onClick={() => setActiveShopCategory(category.label)}
+                className={`flex items-center gap-2.5 rounded-(--radius-md) px-3 py-2 text-start text-sm font-medium transition-colors ${
+                  activeShopCategory === category.label
+                    ? "bg-(--color-primary) text-white"
+                    : "text-(--color-dark) hover:bg-(--color-bg)"
+                }`}
               >
-                {category.label}
-                <ChevronDown
-                  size={14}
-                  className={`transition-transform duration-200 ${
-                    activeCategory === category.label ? "rotate-180" : ""
-                  }`}
-                />
-              </Link>
+                <category.icon size={16} className="shrink-0" />
+                <span className="truncate">{category.label}</span>
+              </button>
+            ))}
+          </div>
+
+          <div className="max-h-[420px] overflow-y-auto">
+            <div className="grid grid-cols-2 gap-8 sm:grid-cols-4">
+              {activeCategory.columns.map((column) => (
+                <div key={column.title}>
+                  <h6 className="mb-2.5">{column.title}</h6>
+                  <div className="flex flex-col items-start gap-2">
+                    {column.links.map((link) => (
+                      <Link
+                        key={link.href}
+                        href={`/${lang}${link.href}`}
+                        onClick={() => setShopMenuOpen(false)}
+                        className="text-sm text-(--color-text-muted) transition-colors hover:text-(--color-primary)"
+                      >
+                        {link.label}
+                      </Link>
+                    ))}
+                  </div>
+                </div>
+              ))}
             </div>
-          ))}
-
-          <Link
-            href={`/${lang}/deals`}
-            className="px-3 py-2.5 text-sm font-semibold text-(--color-secondary)"
-          >
-            {dict.nav.deals}
-          </Link>
-          <Link
-            href={`/${lang}/sellers`}
-            className="px-3 py-2.5 text-sm font-medium text-(--color-text) transition-colors hover:text-(--color-primary)"
-          >
-            {dict.nav.sellers}
-          </Link>
-        </nav>
-
-        {navCategories.map((category) => (
-          <MegaMenu key={category.label} category={category} show={activeCategory === category.label} />
-        ))}
-      </div>
+          </div>
+        </div>
+      </Dropdown>
 
       {/* Mobile drawer */}
-      <MobileDrawer show={mobileOpen} onClose={() => setMobileOpen(false)} side={dir === "rtl" ? "right" : "left"}>
+      <MobileDrawer
+        show={mobileOpen}
+        onClose={() => setMobileOpen(false)}
+        side={dir === "rtl" ? "right" : "left"}
+      >
         <div className="flex items-center justify-between border-b border-(--color-border) p-4">
           <Link
             href={`/${lang}`}
@@ -167,7 +210,12 @@ const Navbar = ({ dict }: NavbarProps) => {
           >
             Xinda<span className="text-(--color-secondary)">mart</span>
           </Link>
-          <button type="button" aria-label="Close menu" className="btn-ghost !p-2" onClick={() => setMobileOpen(false)}>
+          <button
+            type="button"
+            aria-label="Close menu"
+            className="btn-ghost !p-2"
+            onClick={() => setMobileOpen(false)}
+          >
             <X size={20} />
           </button>
         </div>
@@ -176,15 +224,33 @@ const Navbar = ({ dict }: NavbarProps) => {
           <label htmlFor="mobile-search" className="sr-only">
             {dict.common.search}
           </label>
-          <div className="flex w-full items-center gap-1 rounded-full border border-(--color-border) bg-(--color-bg) p-1 transition-colors focus-within:border-(--color-primary) focus-within:bg-(--color-surface) focus-within:shadow-[0_0_0_3px_var(--color-primary-faint)]">
+          <div className="flex h-[46px] w-full items-stretch overflow-hidden rounded-full border border-(--color-border) bg-(--color-bg) shadow-(--shadow-sm) transition-all focus-within:border-(--color-primary) focus-within:bg-(--color-surface) focus-within:shadow-[0_0_0_3px_var(--color-primary-faint)]">
+            <label
+              htmlFor="mobile-image-search"
+              aria-label="Search by image"
+              title="Search by image"
+              className="flex h-full w-[50px] shrink-0 cursor-pointer items-center justify-center bg-(--color-border) text-(--color-text-muted) transition-colors hover:bg-(--color-primary-faint) hover:text-(--color-primary)"
+            >
+              <Camera size={20} />
+            </label>
+            <input
+              id="mobile-image-search"
+              type="file"
+              accept="image/*"
+              capture="environment"
+              className="hidden"
+            />
             <input
               id="mobile-search"
               type="search"
               placeholder={dict.common.search}
-              className="w-full min-w-0 border-0 bg-transparent px-3 py-0 shadow-none outline-none"
+              className="w-full min-w-0 border-0 bg-transparent px-3 py-3 text-sm shadow-none outline-none placeholder:text-(--color-text-light)"
             />
-            <button type="submit" aria-label={dict.common.search} className="btn-primary shrink-0 rounded-full px-5 py-2">
-              <Search size={18} />
+            <button
+              type="submit"
+              className="btn-primary me-1.5 shrink-0 self-center rounded-full px-5"
+            >
+              Search
             </button>
           </div>
         </form>
@@ -202,7 +268,10 @@ const Navbar = ({ dict }: NavbarProps) => {
             <details key={category.label} className="group">
               <summary className="flex list-none items-center justify-between rounded-(--radius-md) border-0 px-3 py-2.5 text-sm font-medium transition-colors hover:bg-(--color-bg)">
                 {category.label}
-                <ChevronDown size={16} className="transition-transform duration-200 group-open:rotate-180" />
+                <ChevronDown
+                  size={16}
+                  className="transition-transform duration-200 group-open:rotate-180"
+                />
               </summary>
               <div className="flex flex-col gap-0.5 py-1 ps-6">
                 {category.columns
@@ -240,16 +309,28 @@ const Navbar = ({ dict }: NavbarProps) => {
 
         <div className="mt-auto flex flex-col gap-3 border-t border-(--color-border) p-4">
           <div className="grid grid-cols-2 gap-2">
-            <Link href={`/${lang}/wishlist`} onClick={() => setMobileOpen(false)} className="btn-outline btn-sm">
+            <Link
+              href={`/${lang}/wishlist`}
+              onClick={() => setMobileOpen(false)}
+              className="btn-outline btn-sm"
+            >
               <Heart size={16} />
               {dict.nav.wishlist}
             </Link>
-            <Link href={`/${lang}/cart`} onClick={() => setMobileOpen(false)} className="btn-outline btn-sm">
+            <Link
+              href={`/${lang}/cart`}
+              onClick={() => setMobileOpen(false)}
+              className="btn-outline btn-sm"
+            >
               <ShoppingCart size={16} />
               {dict.nav.cart}
             </Link>
           </div>
-          <Link href={`/${lang}/sign-in`} onClick={() => setMobileOpen(false)} className="btn-primary btn-sm">
+          <Link
+            href={`/${lang}/sign-in`}
+            onClick={() => setMobileOpen(false)}
+            className="btn-primary btn-sm"
+          >
             <User size={16} />
             {dict.nav.sign_in}
           </Link>

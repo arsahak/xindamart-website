@@ -1,4 +1,4 @@
-export const locales = ["en", "bn", "hi", "ur", "ar", "es", "zh"] as const;
+export const locales = ["en", "bn", "hi", "ur", "ar", "es", "zh", "fr"] as const;
 
 export type Locale = (typeof locales)[number];
 
@@ -14,6 +14,7 @@ export const localeNames: Record<Locale, string> = {
   ar: "العربية",
   es: "Español",
   zh: "中文",
+  fr: "Français",
 };
 
 export function getDirection(locale: Locale): "ltr" | "rtl" {

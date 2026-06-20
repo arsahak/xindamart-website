@@ -48,6 +48,7 @@ export const localeCurrencyMap: Record<Locale, CurrencyCode> = {
   ar: "SAR",
   es: "EUR",
   zh: "CNY",
+  fr: "EUR",
 };
 
 export function isCurrencyCode(value: string): value is CurrencyCode {

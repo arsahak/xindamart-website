@@ -8,6 +8,7 @@ const dictionaries = {
   ar: () => import("./ar.json").then((m) => m.default),
   es: () => import("./es.json").then((m) => m.default),
   zh: () => import("./zh.json").then((m) => m.default),
+  fr: () => import("./fr.json").then((m) => m.default),
 } satisfies Record<Locale, () => Promise<typeof import("./en.json")>>;
 
 export const getDictionary = async (locale: Locale) => dictionaries[locale]();

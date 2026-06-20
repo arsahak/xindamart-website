@@ -1,11 +1,19 @@
 import {
-  Smartphone,
+  Baby,
+  BookOpen,
+  Car,
+  Dumbbell,
+  Factory,
+  Gamepad2,
+  Gem,
+  Hammer,
+  Luggage,
+  PawPrint,
+  ShoppingBasket,
   Shirt,
+  Smartphone,
   Sofa,
   Sparkles,
-  Factory,
-  Dumbbell,
-  Car,
   type LucideIcon,
 } from "lucide-react";
 
@@ -388,6 +396,239 @@ export const navCategories: NavCategory[] = [
       subtitle: "Verified sellers, fast worldwide shipping",
       cta: "Shop Automotive",
       href: "/deals/automotive",
+    },
+  },
+  {
+    label: "Books & Stationery",
+    href: "/category/books-stationery",
+    icon: BookOpen,
+    columns: [
+      {
+        title: "Books",
+        links: [
+          { label: "Fiction", href: "/category/books-stationery/fiction" },
+          { label: "Non-Fiction", href: "/category/books-stationery/non-fiction" },
+          { label: "Children's Books", href: "/category/books-stationery/childrens" },
+          { label: "Academic & Textbooks", href: "/category/books-stationery/academic" },
+        ],
+      },
+      {
+        title: "Stationery & Office",
+        links: [
+          { label: "Notebooks & Diaries", href: "/category/books-stationery/notebooks" },
+          { label: "Pens & Writing", href: "/category/books-stationery/pens" },
+          { label: "Art Supplies", href: "/category/books-stationery/art-supplies", badge: "new" },
+        ],
+      },
+    ],
+    promo: {
+      title: "Back to School",
+      subtitle: "Notebooks, pens & supplies at low prices",
+      cta: "Shop Stationery",
+      href: "/deals/books-stationery",
+    },
+  },
+  {
+    label: "Toys & Games",
+    href: "/category/toys-games",
+    icon: Gamepad2,
+    columns: [
+      {
+        title: "Toys",
+        links: [
+          { label: "Action Figures", href: "/category/toys-games/action-figures" },
+          { label: "Building Sets", href: "/category/toys-games/building-sets", badge: "hot" },
+          { label: "Educational Toys", href: "/category/toys-games/educational" },
+          { label: "Outdoor Toys", href: "/category/toys-games/outdoor" },
+        ],
+      },
+      {
+        title: "Games",
+        links: [
+          { label: "Board Games", href: "/category/toys-games/board-games" },
+          { label: "Puzzles", href: "/category/toys-games/puzzles" },
+          { label: "Video Games", href: "/category/toys-games/video-games", badge: "new" },
+        ],
+      },
+    ],
+    promo: {
+      title: "Playtime Deals",
+      subtitle: "Top-rated toys and games for every age",
+      cta: "Shop Toys",
+      href: "/deals/toys-games",
+    },
+  },
+  {
+    label: "Groceries & Gourmet",
+    href: "/category/groceries-gourmet",
+    icon: ShoppingBasket,
+    columns: [
+      {
+        title: "Pantry Staples",
+        links: [
+          { label: "Rice & Grains", href: "/category/groceries-gourmet/rice-grains" },
+          { label: "Cooking Oils", href: "/category/groceries-gourmet/oils" },
+          { label: "Spices & Seasonings", href: "/category/groceries-gourmet/spices" },
+        ],
+      },
+      {
+        title: "Snacks & Beverages",
+        links: [
+          { label: "Snacks", href: "/category/groceries-gourmet/snacks" },
+          { label: "Tea & Coffee", href: "/category/groceries-gourmet/tea-coffee" },
+          { label: "Gourmet & Specialty", href: "/category/groceries-gourmet/gourmet", badge: "new" },
+        ],
+      },
+    ],
+    promo: {
+      title: "Pantry Restock",
+      subtitle: "Everyday essentials delivered to your door",
+      cta: "Shop Groceries",
+      href: "/deals/groceries-gourmet",
+    },
+  },
+  {
+    label: "Pet Supplies",
+    href: "/category/pet-supplies",
+    icon: PawPrint,
+    columns: [
+      {
+        title: "Food & Treats",
+        links: [
+          { label: "Dog Food", href: "/category/pet-supplies/dog-food" },
+          { label: "Cat Food", href: "/category/pet-supplies/cat-food" },
+          { label: "Treats", href: "/category/pet-supplies/treats" },
+        ],
+      },
+      {
+        title: "Accessories",
+        links: [
+          { label: "Beds & Furniture", href: "/category/pet-supplies/beds" },
+          { label: "Toys", href: "/category/pet-supplies/toys" },
+          { label: "Grooming", href: "/category/pet-supplies/grooming", badge: "hot" },
+        ],
+      },
+    ],
+    promo: {
+      title: "Happy Pets",
+      subtitle: "Food, toys & care essentials for your pets",
+      cta: "Shop Pet Supplies",
+      href: "/deals/pet-supplies",
+    },
+  },
+  {
+    label: "Baby & Kids",
+    href: "/category/baby-kids",
+    icon: Baby,
+    columns: [
+      {
+        title: "Baby Care",
+        links: [
+          { label: "Diapers & Wipes", href: "/category/baby-kids/diapers" },
+          { label: "Feeding", href: "/category/baby-kids/feeding" },
+          { label: "Baby Gear", href: "/category/baby-kids/gear" },
+        ],
+      },
+      {
+        title: "Kids",
+        links: [
+          { label: "Kids' Clothing", href: "/category/baby-kids/clothing", badge: "new" },
+          { label: "School Bags", href: "/category/baby-kids/school-bags" },
+          { label: "Kids' Footwear", href: "/category/baby-kids/footwear" },
+        ],
+      },
+    ],
+    promo: {
+      title: "Little Ones",
+      subtitle: "Everything for baby & kids, all in one place",
+      cta: "Shop Baby & Kids",
+      href: "/deals/baby-kids",
+    },
+  },
+  {
+    label: "Jewelry & Watches",
+    href: "/category/jewelry-watches",
+    icon: Gem,
+    columns: [
+      {
+        title: "Jewelry",
+        links: [
+          { label: "Necklaces", href: "/category/jewelry-watches/necklaces" },
+          { label: "Earrings", href: "/category/jewelry-watches/earrings" },
+          { label: "Rings", href: "/category/jewelry-watches/rings", badge: "hot" },
+        ],
+      },
+      {
+        title: "Watches",
+        links: [
+          { label: "Men's Watches", href: "/category/jewelry-watches/mens-watches" },
+          { label: "Women's Watches", href: "/category/jewelry-watches/womens-watches" },
+        ],
+      },
+    ],
+    promo: {
+      title: "Shine Bright",
+      subtitle: "Elegant jewelry & watches at honest prices",
+      cta: "Shop Jewelry",
+      href: "/deals/jewelry-watches",
+    },
+  },
+  {
+    label: "Tools & Home Improvement",
+    href: "/category/tools-home-improvement",
+    icon: Hammer,
+    columns: [
+      {
+        title: "Hand & Power Tools",
+        links: [
+          { label: "Power Drills", href: "/category/tools-home-improvement/drills" },
+          { label: "Hand Tools", href: "/category/tools-home-improvement/hand-tools" },
+          { label: "Tool Storage", href: "/category/tools-home-improvement/storage" },
+        ],
+      },
+      {
+        title: "Home Improvement",
+        links: [
+          { label: "Paint & Supplies", href: "/category/tools-home-improvement/paint" },
+          { label: "Plumbing", href: "/category/tools-home-improvement/plumbing" },
+          { label: "Electrical", href: "/category/tools-home-improvement/electrical", badge: "new" },
+        ],
+      },
+    ],
+    promo: {
+      title: "DIY Essentials",
+      subtitle: "Tools & supplies for every home project",
+      cta: "Shop Tools",
+      href: "/deals/tools-home-improvement",
+    },
+  },
+  {
+    label: "Travel & Luggage",
+    href: "/category/travel-luggage",
+    icon: Luggage,
+    columns: [
+      {
+        title: "Luggage",
+        links: [
+          { label: "Suitcases", href: "/category/travel-luggage/suitcases", badge: "sale" },
+          { label: "Duffel Bags", href: "/category/travel-luggage/duffel-bags" },
+          { label: "Travel Backpacks", href: "/category/travel-luggage/backpacks" },
+        ],
+      },
+      {
+        title: "Travel Accessories",
+        links: [
+          { label: "Packing Organizers", href: "/category/travel-luggage/organizers" },
+          { label: "Travel Pillows", href: "/category/travel-luggage/pillows" },
+          { label: "Adapters & Electronics", href: "/category/travel-luggage/adapters" },
+        ],
+      },
+    ],
+    promo: {
+      title: "Pack Smart",
+      subtitle: "Durable luggage & travel gear for every trip",
+      cta: "Shop Travel",
+      href: "/deals/travel-luggage",
     },
   },
 ];

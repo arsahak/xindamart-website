@@ -19,7 +19,7 @@ export function MobileDrawer({ show, onClose, children, side = "left" }: MobileD
       {show && (
         <>
           <motion.div
-            className="fixed inset-0 z-50 bg-black/40 backdrop-blur-sm"
+            className="fixed inset-0 z-50 bg-black/40 backdrop-blur-sm lg:hidden"
             initial="hidden"
             animate="visible"
             exit="exit"
@@ -28,7 +28,7 @@ export function MobileDrawer({ show, onClose, children, side = "left" }: MobileD
             aria-hidden="true"
           />
           <motion.div
-            className={`fixed inset-y-0 ${side === "left" ? "left-0" : "right-0"} z-50 flex w-[85%] max-w-sm flex-col overflow-y-auto bg-(--color-surface) shadow-xl`}
+            className={`fixed inset-y-0 ${side === "left" ? "left-0" : "right-0"} z-50 flex w-[85%] max-w-sm flex-col overflow-y-auto bg-(--color-surface) shadow-xl lg:hidden`}
             initial="hidden"
             animate="visible"
             exit="exit"

@@ -31,7 +31,7 @@ interface FooterLink {
 
 function FooterLinks({ links }: { links: FooterLink[] }) {
   return (
-    <ul className="flex flex-col items-start gap-2.5 pl-0 text-left [&>li]:m-0">
+    <ul className="flex flex-col items-start gap-2.5 ps-0 text-start [&>li]:m-0">
       {links.map((link) => (
         <li key={link.href}>
           <Link
@@ -111,7 +111,7 @@ const Footer = ({ dict, lang }: FooterProps) => {
   ];
 
   return (
-    <footer className="mt-16 border-t border-(--color-border) bg-(--color-surface)">
+    <footer className="border-t border-(--color-border) bg-(--color-surface)">
       <div className="container grid grid-cols-2 gap-x-6 gap-y-10 py-12 sm:grid-cols-3 lg:grid-cols-12">
         {/* Brand */}
         <div className="col-span-2 sm:col-span-3 lg:col-span-4">
@@ -143,20 +143,20 @@ const Footer = ({ dict, lang }: FooterProps) => {
         </div>
 
         {/* Company */}
-        <div className="text-left lg:col-span-2">
-          <h6 className="mb-4 text-left">{dict.footer.company}</h6>
+        <div className="text-start lg:col-span-2">
+          <h6 className="mb-4 text-start">{dict.footer.company}</h6>
           <FooterLinks links={companyLinks} />
         </div>
 
         {/* Customer service */}
-        <div className="text-left lg:col-span-2">
-          <h6 className="mb-4 text-left">{dict.footer.customer_service}</h6>
+        <div className="text-start lg:col-span-2">
+          <h6 className="mb-4 text-start">{dict.footer.customer_service}</h6>
           <FooterLinks links={serviceLinks} />
         </div>
 
         {/* Top categories */}
-        <div className="text-left lg:col-span-2">
-          <h6 className="mb-4 text-left">{dict.footer.top_categories}</h6>
+        <div className="text-start lg:col-span-2">
+          <h6 className="mb-4 text-start">{dict.footer.top_categories}</h6>
           <FooterLinks links={categoryLinks} />
         </div>
 
