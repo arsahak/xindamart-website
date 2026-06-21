@@ -3,6 +3,8 @@
 import { navCategories } from "@/app/data/categories";
 import type { Dictionary } from "@/app/dictionaries";
 import { getDirection, type Locale } from "@/app/i18n-config";
+import { CurrencySwitcher } from "@/component/common/CurrencySwitcher";
+import { LanguageSwitcher } from "@/component/common/LanguageSwitcher";
 import { Dropdown } from "@/component/motion/Dropdown";
 import { MobileDrawer } from "@/component/motion/MobileDrawer";
 import { megaMenuVariants } from "@/component/motion/variants";
@@ -31,10 +33,13 @@ const Navbar = ({ dict }: NavbarProps) => {
 
   const [mobileOpen, setMobileOpen] = useState(false);
   const [shopMenuOpen, setShopMenuOpen] = useState(false);
-  const [activeShopCategory, setActiveShopCategory] = useState(navCategories[0].label);
+  const [activeShopCategory, setActiveShopCategory] = useState(
+    navCategories[0].label,
+  );
 
   const activeCategory =
-    navCategories.find((category) => category.label === activeShopCategory) ?? navCategories[0];
+    navCategories.find((category) => category.label === activeShopCategory) ??
+    navCategories[0];
 
   return (
     <header className="sticky top-0 z-40 bg-(--color-surface) shadow-(--shadow-sm)">
@@ -106,6 +111,16 @@ const Navbar = ({ dict }: NavbarProps) => {
             </button>
           </div>
         </form>
+
+        <div className="hidden items-center gap-1 self-center sm:flex">
+          <LanguageSwitcher />
+          <CurrencySwitcher />
+        </div>
+
+        <div
+          className="hidden h-5 w-px shrink-0 self-center bg-(--color-border) sm:block"
+          aria-hidden="true"
+        />
 
         <div className="ms-auto flex items-center gap-1 sm:gap-2">
           <Link

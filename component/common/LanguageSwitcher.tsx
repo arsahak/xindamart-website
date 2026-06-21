@@ -1,35 +1,86 @@
 "use client";
 
+import { useState } from "react";
 import { useRouter, usePathname, useParams } from "next/navigation";
-import { locales, localeNames, type Locale } from "@/app/i18n-config";
+import { ChevronDown } from "lucide-react";
+import { locales, type Locale } from "@/app/i18n-config";
+import { localeToCountryCode } from "@/app/data/shipping";
+import { Dropdown } from "@/component/motion/Dropdown";
+
+const shortLabel: Record<Locale, string> = {
+  en: "ENG",
+  bn: "BAN",
+  hi: "HIN",
+  ur: "URD",
+  ar: "ARB",
+  es: "SPA",
+  zh: "CHN",
+  fr: "FRA",
+};
+
+function flagUrl(locale: Locale) {
+  return `https://flagcdn.com/24x18/${localeToCountryCode[locale].toLowerCase()}.png`;
+}
+
+function setLocaleCookie(locale: string) {
+  document.cookie = `NEXT_LOCALE=${locale}; path=/; max-age=31536000`;
+}
 
 export function LanguageSwitcher() {
+  const [open, setOpen] = useState(false);
   const router = useRouter();
   const pathname = usePathname();
   const params = useParams<{ lang: Locale }>();
   const currentLang = params?.lang ?? "en";
 
-  const handleChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
-    const newLocale = e.target.value;
-    document.cookie = `NEXT_LOCALE=${newLocale}; path=/; max-age=31536000`;
-
+  const handleSelect = (newLocale: Locale) => {
+    setLocaleCookie(newLocale);
     const segments = pathname.split("/");
     segments[1] = newLocale;
     router.push(segments.join("/") || "/");
+    setOpen(false);
   };
 
   return (
-    <select
-      aria-label="Select language"
-      value={currentLang}
-      onChange={handleChange}
-      className="!w-auto !py-1 !px-2 !text-sm"
-    >
-      {locales.map((l) => (
-        <option key={l} value={l}>
-          {localeNames[l]}
-        </option>
-      ))}
-    </select>
+    <div className="relative">
+      <button
+        type="button"
+        aria-label="Select language"
+        onClick={() => setOpen((v) => !v)}
+        className="inline-flex items-center gap-1.5 rounded-(--radius-md) px-2 py-1.5 text-sm transition-colors hover:bg-(--color-bg)"
+      >
+        <img src={flagUrl(currentLang)} alt="" width={20} height={15} className="rounded-[2px]" />
+        {shortLabel[currentLang]}
+        <ChevronDown size={12} className={`transition-transform ${open ? "rotate-180" : ""}`} />
+      </button>
+
+      {open && (
+        <button
+          type="button"
+          aria-label="Close"
+          onClick={() => setOpen(false)}
+          className="fixed inset-0 z-20 cursor-default"
+        />
+      )}
+
+      <Dropdown
+        show={open}
+        className="absolute start-0 top-full z-30 mt-1 min-w-[140px] overflow-hidden rounded-(--radius-md) border border-(--color-border) bg-(--color-surface) py-1 shadow-xl"
+      >
+        {locales.map((l) => (
+          <button
+            key={l}
+            type="button"
+            onClick={() => handleSelect(l)}
+            className={`flex w-full items-center gap-2 px-3 py-2 text-start text-sm transition-colors hover:bg-(--color-bg) ${
+              l === currentLang ? "font-semibold text-(--color-primary)" : "text-(--color-dark)"
+            }`}
+          >
+            <img src={flagUrl(l)} alt="" width={20} height={15} className="rounded-[2px]" />
+            {shortLabel[l]}
+          </button>
+        ))}
+      </Dropdown>
+    </div>
   );
 }

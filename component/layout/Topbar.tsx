@@ -1,9 +1,7 @@
-import Link from "next/link";
-import { Truck, Store, HelpCircle } from "lucide-react";
-import { CurrencySwitcher } from "@/component/common/CurrencySwitcher";
-import { LanguageSwitcher } from "@/component/common/LanguageSwitcher";
 import type { Dictionary } from "@/app/dictionaries";
 import type { Locale } from "@/app/i18n-config";
+import { HelpCircle, Store, Truck } from "lucide-react";
+import Link from "next/link";
 
 interface TopbarProps {
   dict: Dictionary;
@@ -38,11 +36,6 @@ const Topbar = ({ dict, lang }: TopbarProps) => {
             <HelpCircle size={14} />
             {dict.topbar.help_center}
           </Link>
-
-          <div className="h-4 w-px bg-white/20" aria-hidden="true" />
-
-          <LanguageSwitcher />
-          <CurrencySwitcher />
         </div>
       </div>
     </div>
