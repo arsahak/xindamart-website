@@ -25,7 +25,7 @@ export function ProductCard({ product, icon, lang }: ProductCardProps) {
 
   return (
     <Link
-      href={`/${lang}${product.href}`}
+      href={`/${lang}/product/${product.id}`}
       className="group block overflow-hidden rounded-(--radius-lg) border border-(--color-border) bg-(--color-surface) transition-shadow hover:shadow-lg"
     >
       <div className={`relative aspect-square overflow-hidden bg-linear-to-br ${product.gradient}`}>

@@ -1,10 +1,10 @@
 "use client";
 
-import { useState } from "react";
-import { ChevronDown } from "lucide-react";
 import { currencies, type CurrencyCode } from "@/app/currency-config";
 import { Dropdown } from "@/component/motion/Dropdown";
 import { useCurrency } from "@/component/providers/CurrencyProvider";
+import { ChevronDown } from "lucide-react";
+import { useState } from "react";
 
 export function CurrencySwitcher() {
   const [open, setOpen] = useState(false);
@@ -22,10 +22,13 @@ export function CurrencySwitcher() {
         type="button"
         aria-label="Select currency"
         onClick={() => setOpen((v) => !v)}
-        className="inline-flex items-center gap-1.5 rounded-(--radius-md) px-2 py-1.5 text-sm transition-colors hover:bg-(--color-bg)"
+        className="btn-ghost inline-flex items-center gap-1.5 !p-2 text-sm rounded"
       >
         {current.symbol} {current.code}
-        <ChevronDown size={12} className={`transition-transform ${open ? "rotate-180" : ""}`} />
+        <ChevronDown
+          size={12}
+          className={`transition-transform ${open ? "rotate-180" : ""}`}
+        />
       </button>
 
       {open && (
@@ -39,7 +42,7 @@ export function CurrencySwitcher() {
 
       <Dropdown
         show={open}
-        className="absolute start-0 top-full z-30 mt-1 max-h-[320px] min-w-[140px] overflow-y-auto rounded-(--radius-md) border border-(--color-border) bg-(--color-surface) py-1 shadow-xl"
+        className="absolute start-0 top-full z-30 mt-1 max-h-[320px] min-w-[90px] overflow-y-auto rounded border border-(--color-border) bg-(--color-surface) py-1 shadow-xl"
       >
         {currencies.map((c) => (
           <button
@@ -47,7 +50,9 @@ export function CurrencySwitcher() {
             type="button"
             onClick={() => handleSelect(c.code)}
             className={`flex w-full items-center gap-2 px-3 py-2 text-start text-sm transition-colors hover:bg-(--color-bg) ${
-              c.code === currency ? "font-semibold text-(--color-primary)" : "text-(--color-dark)"
+              c.code === currency
+                ? "font-semibold text-(--color-primary)"
+                : "text-(--color-dark)"
             }`}
           >
             {c.symbol} {c.code}

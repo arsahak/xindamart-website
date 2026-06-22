@@ -89,7 +89,7 @@ export function CategoryGrid({ dict, lang }: CategoryGridProps) {
                   visibleProducts.map((product) => (
                     <Link
                       key={product.id}
-                      href={`/${lang}${product.href}`}
+                      href={`/${lang}/product/${product.id}`}
                       className="group relative block aspect-square overflow-hidden rounded-(--radius-lg) transition-shadow hover:shadow-lg lg:aspect-auto lg:h-full"
                     >
                       <div className={`absolute inset-0 bg-linear-to-br ${product.gradient}`}>

@@ -1,11 +1,11 @@
 "use client";
 
-import { useState } from "react";
-import { useRouter, usePathname, useParams } from "next/navigation";
-import { ChevronDown } from "lucide-react";
-import { locales, type Locale } from "@/app/i18n-config";
 import { localeToCountryCode } from "@/app/data/shipping";
+import { locales, type Locale } from "@/app/i18n-config";
 import { Dropdown } from "@/component/motion/Dropdown";
+import { ChevronDown } from "lucide-react";
+import { useParams, usePathname, useRouter } from "next/navigation";
+import { useState } from "react";
 
 const shortLabel: Record<Locale, string> = {
   en: "ENG",
@@ -35,9 +35,21 @@ export function LanguageSwitcher() {
 
   const handleSelect = (newLocale: Locale) => {
     setLocaleCookie(newLocale);
-    const segments = pathname.split("/");
-    segments[1] = newLocale;
-    router.push(segments.join("/") || "/");
+
+    // The homepage is the only route with a visible locale segment to swap.
+    // Every other page has a clean URL, so just refresh in place — the
+    // updated cookie makes the proxy rewrite to the new locale's content.
+    const isLocalePath = locales.some(
+      (l) => pathname === `/${l}` || pathname.startsWith(`/${l}/`),
+    );
+    if (isLocalePath) {
+      const segments = pathname.split("/");
+      segments[1] = newLocale;
+      router.push(segments.join("/") || "/");
+    } else {
+      router.refresh();
+    }
+
     setOpen(false);
   };
 
@@ -47,11 +59,20 @@ export function LanguageSwitcher() {
         type="button"
         aria-label="Select language"
         onClick={() => setOpen((v) => !v)}
-        className="inline-flex items-center gap-1.5 rounded-(--radius-md) px-2 py-1.5 text-sm transition-colors hover:bg-(--color-bg)"
+        className="btn-ghost inline-flex items-center gap-1.5 !p-2 text-sm rounded"
       >
-        <img src={flagUrl(currentLang)} alt="" width={20} height={15} className="rounded-[2px]" />
+        <img
+          src={flagUrl(currentLang)}
+          alt=""
+          width={20}
+          height={15}
+          className="rounded-[2px]"
+        />
         {shortLabel[currentLang]}
-        <ChevronDown size={12} className={`transition-transform ${open ? "rotate-180" : ""}`} />
+        <ChevronDown
+          size={12}
+          className={`transition-transform ${open ? "rotate-180" : ""}`}
+        />
       </button>
 
       {open && (
@@ -65,7 +86,7 @@ export function LanguageSwitcher() {
 
       <Dropdown
         show={open}
-        className="absolute start-0 top-full z-30 mt-1 min-w-[140px] overflow-hidden rounded-(--radius-md) border border-(--color-border) bg-(--color-surface) py-1 shadow-xl"
+        className="absolute start-0 top-full z-30 mt-1 min-w-[90px] rounded overflow-hidden  border border-(--color-border) bg-(--color-surface) py-1 shadow-xl "
       >
         {locales.map((l) => (
           <button
@@ -73,10 +94,18 @@ export function LanguageSwitcher() {
             type="button"
             onClick={() => handleSelect(l)}
             className={`flex w-full items-center gap-2 px-3 py-2 text-start text-sm transition-colors hover:bg-(--color-bg) ${
-              l === currentLang ? "font-semibold text-(--color-primary)" : "text-(--color-dark)"
+              l === currentLang
+                ? "font-semibold text-(--color-primary)"
+                : "text-(--color-dark)"
             }`}
           >
-            <img src={flagUrl(l)} alt="" width={20} height={15} className="rounded-[2px]" />
+            <img
+              src={flagUrl(l)}
+              alt=""
+              width={20}
+              height={15}
+              className="rounded-[2px]"
+            />
             {shortLabel[l]}
           </button>
         ))}

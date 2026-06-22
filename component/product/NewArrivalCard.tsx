@@ -44,7 +44,7 @@ export function NewArrivalCard({ slides, lang, intervalMs = 3500 }: NewArrivalCa
 
   return (
     <Link
-      href={`/${lang}${slide.href}`}
+      href={`/${lang}/product/${slide.id}`}
       className="group relative block aspect-[3/4] overflow-hidden rounded-(--radius-2xl) transition-shadow hover:shadow-lg"
     >
       {slides.length > 1 && (

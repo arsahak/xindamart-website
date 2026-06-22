@@ -411,6 +411,21 @@ select:disabled {
   cursor: not-allowed;
 }
 
+/* Checkboxes & radios opt out of the text-input box styling above —
+   native control, sized to its own box, no border/padding/full-width. */
+input[type="checkbox"],
+input[type="radio"] {
+  width: 1rem;
+  height: 1rem;
+  padding: 0;
+  border: none;
+  border-radius: 0;
+  background-color: transparent;
+  accent-color: var(--color-primary);
+  cursor: pointer;
+  flex-shrink: 0;
+}
+
 textarea {
   resize: vertical;
   min-height: 100px;

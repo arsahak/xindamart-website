@@ -71,7 +71,7 @@ const Navbar = ({ dict }: NavbarProps) => {
         </button>
 
         <Link
-          href={`/${lang}/category`}
+          href={`/product`}
           className="hidden shrink-0 text-sm font-semibold text-(--color-text) transition-colors hover:text-(--color-primary) sm:inline-flex"
         >
           Shop
@@ -126,7 +126,7 @@ const Navbar = ({ dict }: NavbarProps) => {
           <Link
             href={`/${lang}/wishlist`}
             aria-label={dict.nav.wishlist}
-            className="btn-ghost hidden !p-2 sm:flex"
+            className="btn-ghost hidden !p-2 sm:flex rounded"
           >
             <Heart size={20} />
           </Link>
@@ -134,7 +134,7 @@ const Navbar = ({ dict }: NavbarProps) => {
           <Link
             href={`/${lang}/cart`}
             aria-label={dict.nav.cart}
-            className="btn-ghost relative !p-2"
+            className="btn-ghost relative !p-2 rounded"
           >
             <ShoppingCart size={20} />
             <span className="absolute right-0.5 top-0.5 flex h-3.5 w-3.5 items-center justify-center rounded-full bg-(--color-secondary) text-[9px] font-bold text-white">
@@ -145,7 +145,7 @@ const Navbar = ({ dict }: NavbarProps) => {
           <Link
             href={`/${lang}/sign-in`}
             aria-label={dict.nav.account}
-            className="btn-ghost hidden !p-2 sm:flex"
+            className="btn-ghost hidden !p-2 sm:flex rounded"
           >
             <User size={20} />
           </Link>
